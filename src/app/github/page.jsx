@@ -50,7 +50,7 @@ export default function Games() {
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchText]);
+  }, [searchText, itemsPerPage, currentPage]);
 
   return (
     <Fragment>
@@ -68,6 +68,18 @@ export default function Games() {
               onChange={(e) => setSearchText(e.target.value)}
               className="px-4 py-2 border rounded-lg w-full max-w-xl mx-auto"
             />
+
+            <select
+              value={itemsPerPage}
+              onChange={(e) => setItemsPerPage(Number(e.target.value))}
+              className="ml-4 px-4 py-2 border w-48 rounded-lg"
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
           </div>
         </div>
         
@@ -75,10 +87,10 @@ export default function Games() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {apiData.items && apiData.items.map((user) => (
             <div key={user.id} className="bg-white p-4 my-2 rounded-lg shadow-lg">
-              <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full mx-auto" />
-              <h2 className="text-xl font-bold text-center mt-2">{user.login}</h2>
+              <img src={user.avatar_url} alt={user.login} className="w-32 h-24 rounded-full mx-auto" />
+              <h2 className="text-xl font-bold text-center my-3">{user.login}</h2>
               <div className="text-center mt-2">
-                <Link href={`/github/${user.login}`}>
+                <Link href={`/github/${user.login}`} className="bg-secondary text-white px-4 py-2 rounded-lg">
                   View Profile
                 </Link>
               </div>

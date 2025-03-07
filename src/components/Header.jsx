@@ -2,9 +2,9 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="bg-carafe">
+    <header className="bg-primary">
       <div className="container mx-auto flex justify-between items-center p-4">
-        <h1 className="text-sand text-2xl">Github Manager</h1>
+        <h1 className="text-white font-bold text-2xl">Github Manager</h1>
         <nav>
           <ul className="flex space-x-4">
             <li>

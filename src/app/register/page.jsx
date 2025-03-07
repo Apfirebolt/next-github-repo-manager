@@ -1,12 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import Image from "next/image";
+import githubLogo from "../../../public/github.png";
+import { register } from "../../features/authSlice";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+
+  const dispatch = useDispatch();
 
   const validate = () => {
     const newErrors = {};
@@ -28,7 +34,7 @@ const RegisterPage = () => {
       return;
     }
     // Submit to API
-    // await auth.registerAction({ username, email, password });
+    await dispatch(register({ username, email, password }));
   };
 
   return (
@@ -42,10 +48,12 @@ const RegisterPage = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={onSubmit}>
-            <img
-              className="mx-auto h-42 w-64"
-              src="../assets/1.png"
-              alt="Workflow"
+            <Image
+              className="mx-auto h-32 w-auto"
+              src={githubLogo}
+              alt="GitHub Logo"
+              width={48}
+              height={48}
             />
             <div>
               <label

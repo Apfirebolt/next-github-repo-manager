@@ -99,7 +99,7 @@ const UserDetailPage = ({ match }) => {
             href={user.html_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-secondary-300 bg-primary-200 rounded-md shadow-md-primary-300 p-2 mt-4 inline-block"
+            className="bg-primary hover:bg-danger transition-all duration-200 text-white rounded-md shadow-md-primary-300 p-2 mt-4 inline-block"
           >
             View Profile
           </a>
@@ -117,10 +117,13 @@ const UserDetailPage = ({ match }) => {
                   href={repo.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-secondary-300 bg-primary-200 px-2 py-1 rounded-sm shadow-md mt-2 inline-block"
+                  className="text-white mr-2 hover:bg-success transition-all duration-200 bg-secondary px-2 py-1 rounded-sm shadow-md mt-2 inline-block"
                 >
                   View Repo
                 </a>
+                <button className="bg-primary hover:bg-danger transition-all duration-200 text-white px-2 py-1 rounded-sm shadow-md mt-2 inline-block">
+                  Save Repo
+                </button>
               </div>
             ))}
           </div>
