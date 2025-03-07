@@ -1,4 +1,4 @@
-import axiosInstance from "../../plugins/interceptor";
+import axiosInstance from "../plugins/interceptor";
 import Cookies from 'js-cookie';
 
 // Register user
