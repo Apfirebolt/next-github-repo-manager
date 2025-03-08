@@ -30,10 +30,13 @@ const Header = () => {
         <nav>
           <ul className="flex space-x-4">
             {clientUser ? (
-              <li>
+              <li className="flex items-center space-x-2">
+                <span className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold">
+                  Hello, {clientUser.username ? clientUser.username : ""}
+                </span>
                 <button
                   onClick={logoutHandler}
-                  className="text-white hover:text-gray-300"
+                  className="bg-red-500 text-white rounded-full px-3 py-1 text-sm font-semibold hover:bg-red-600"
                 >
                   Logout
                 </button>
@@ -41,29 +44,29 @@ const Header = () => {
             ) : (
               <>
                 <li>
-                  <Link href="/login" className="text-white hover:text-gray-300">
+                  <Link href="/login" className="bg-blue-500 text-white rounded-full px-3 py-1 text-sm font-semibold hover:bg-blue-600">
                     Login
                   </Link>
                 </li>
                 <li>
-                  <Link href="/register" className="text-white hover:text-gray-300">
+                  <Link href="/register" className="bg-green-500 text-white rounded-full px-3 py-1 text-sm font-semibold hover:bg-green-600">
                     Register
                   </Link>
                 </li>
               </>
             )}
             <li>
-              <Link href="/" className="text-white hover:text-gray-300">
+              <Link href="/" className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-gray-300">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/about" className="text-white hover:text-gray-300">
+              <Link href="/about" className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-gray-300">
                 About
               </Link>
             </li>
             <li>
-              <Link href="/github" className="text-white hover:text-gray-300">
+              <Link href="/github" className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-gray-300">
                 Github Users
               </Link>
             </li>

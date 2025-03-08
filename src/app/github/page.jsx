@@ -73,7 +73,7 @@ export default function Github() {
             />
             <button
               onClick={() => goToNextPage()}
-              className="bg-secondary text-white px-4 py-2 rounded-lg ml-4"
+              className={`px-4 py-2 rounded-lg ml-4 ${apiData.total_count < 1 ? 'bg-gray-400 text-gray-700' : 'bg-secondary text-white'}`}
               disabled={apiData.total_count < 1}
             >
               Next Page
@@ -83,7 +83,7 @@ export default function Github() {
             </p>
             <button
               onClick={() => goToPrevPage()}
-              className="bg-secondary text-white px-4 py-2 rounded-lg ml-4"
+              className={`px-4 py-2 rounded-lg ml-4 ${currentPage === 1 ? 'bg-gray-400 text-gray-700' : 'bg-secondary text-white'}`}
               disabled={currentPage === 1}
             >
               Prev Page
