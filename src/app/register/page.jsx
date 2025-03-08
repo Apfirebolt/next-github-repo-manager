@@ -1,7 +1,7 @@
 "use client";
 
-import React, { Fragment, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import githubLogo from "../../../public/github.png";
 import Header from "../../components/Header";
@@ -16,6 +16,7 @@ const RegisterPage = () => {
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
+  const { user, message } = useSelector((state) => state.auth);
 
   const validate = () => {
     const newErrors = {};

@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState, Fragment, use } from "react";
+import { useEffect, useState, Fragment } from "react";
 import axios from "axios";
 import Link from 'next/link';
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
-import Pagination from "../../components/Pagination";
 
-export default function Games() {
+export default function Github() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState("next");
@@ -39,6 +38,14 @@ export default function Games() {
     console.log('Page now is ', page)
   }
 
+  const goToNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  }
+
+  const goToPrevPage = () => {
+    setCurrentPage(currentPage - 1);
+  }
+
   // debounce search here
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -56,7 +63,7 @@ export default function Games() {
           <h1 className="text-3xl font-bold text-center my-2">
             Users
           </h1>
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center">
             <input
               type="text"
               placeholder="Search Github Users..."
@@ -64,11 +71,24 @@ export default function Games() {
               onChange={(e) => setSearchText(e.target.value)}
               className="px-4 py-2 border rounded-lg w-full max-w-xl mx-auto"
             />
-            <Pagination
-              currentPage={currentPage}
-              totalPages={apiData.total_count}
-              onPageChange={() => handlePageChange}
-            />
+            <button
+              onClick={() => goToNextPage()}
+              className="bg-secondary text-white px-4 py-2 rounded-lg ml-4"
+              disabled={apiData.total_count < 1}
+            >
+              Next Page
+            </button>
+            <p className="mx-2">
+              Page: {currentPage} of {Math.ceil(apiData.total_count / itemsPerPage)}
+            </p>
+            <button
+              onClick={() => goToPrevPage()}
+              className="bg-secondary text-white px-4 py-2 rounded-lg ml-4"
+              disabled={currentPage === 1}
+            >
+              Prev Page
+            </button>
+            
             <select
               value={itemsPerPage}
               onChange={(e) => setItemsPerPage(Number(e.target.value))}

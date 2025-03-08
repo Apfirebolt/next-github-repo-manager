@@ -1,13 +1,15 @@
 "use client";
 
-import React, { Fragment, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import { login } from "../../features/authSlice";
 import Image from "next/image";
 import githubLogo from "../../../public/github.png";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +17,8 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
+  
+  const { user, message } = useSelector((state) => state.auth);
 
   const validate = () => {
     const newErrors = {};
@@ -35,6 +39,7 @@ const LoginPage = () => {
       return;
     }
     // Submit to API
+    toast.success("Login successful");
     await dispatch(login({ email, password }));
   };
 
