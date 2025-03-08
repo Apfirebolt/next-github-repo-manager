@@ -36,11 +36,7 @@ export default function Games() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    const params = {
-      page: page,
-      search: searchText
-    };
-    dispatch(getGames(params));
+    console.log('Page now is ', page)
   }
 
   // debounce search here
@@ -68,7 +64,11 @@ export default function Games() {
               onChange={(e) => setSearchText(e.target.value)}
               className="px-4 py-2 border rounded-lg w-full max-w-xl mx-auto"
             />
-
+            <Pagination
+              currentPage={currentPage}
+              totalPages={apiData.total_count}
+              onPageChange={() => handlePageChange}
+            />
             <select
               value={itemsPerPage}
               onChange={(e) => setItemsPerPage(Number(e.target.value))}

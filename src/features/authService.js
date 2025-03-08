@@ -1,10 +1,13 @@
 import axiosInstance from "../plugins/interceptor";
 import Cookie from 'js-cookie';
+import { toast } from 'react-toastify';
 
 // Register user
 const register = async (userData) => {
   try {
     const response = await axiosInstance.post("accounts/api/register", userData);
+    toast.success("Registration successful!");
+    Cookie.set("user", JSON.stringify(response.data), { expires: 30 });
     return response.data;
   } catch (err) {
     console.error(err)
@@ -19,8 +22,10 @@ const login = async (userData) => {
 
     if (response.data) {
       localStorage.setItem("user", JSON.stringify(response.data));
-      // set cookie
-      Cookie.set('token', response.data.token, { expires: 30 });
+      toast.success("Login successful!");
+      // set the data in cookie
+      Cookie.set("user", JSON.stringify(response.data), { expires: 30 });
+      return response.data;
     }
     return response.data;
   } catch (err) {
@@ -32,8 +37,7 @@ const login = async (userData) => {
 
 // Logout user
 const logout = () => {
-  Cookie.remove('token');
-  localStorage.removeItem("user")
+  Cookie.remove('user');
 };
 
 // Get user profile

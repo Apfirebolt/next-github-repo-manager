@@ -113,7 +113,6 @@ export const authSlice = createSlice({
         state.isSuccess = true
         state.user = action.payload
         state.message = 'User logged in successfully'
-        console.log('Promise fulfilled')
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
