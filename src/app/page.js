@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import SavedRepo from "../components/SavedRepo";
+import SavedProfiles from "../components/SavedProfiles";
 import { Fragment } from "react";
 import { resetMessage } from "../features/authSlice";
 
@@ -42,6 +43,7 @@ export default function Home() {
           </p>
         </div>
         {isLogged && <SavedRepo />}
+        {isLogged && <SavedProfiles />}
       </main>
       <Footer />
     </Fragment>

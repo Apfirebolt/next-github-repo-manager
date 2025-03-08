@@ -48,15 +48,10 @@ export default function Github() {
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [itemsPerPage, currentPage]);
+  }, [searchText, currentPage, itemsPerPage]);
 
-  // reset search text when page changes
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      searchUser(searchText, 1, itemsPerPage);
-    }, 300);
-
-    return () => clearTimeout(delayDebounceFn);
+    setCurrentPage(1); // Reset page to 1 when search text changes
   }, [searchText]);
 
   return (

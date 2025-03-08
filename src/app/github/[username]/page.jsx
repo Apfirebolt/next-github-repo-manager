@@ -18,6 +18,38 @@ const UserDetailPage = ({ match }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => state.auth);
 
+  const saveProfile = async (profile) => {
+    const data = {
+      owner: user.id,
+      user_name: profile.login,
+      user_url: profile.html_url,
+      user_image_url: profile.avatar_url,
+    };
+    const headers = {
+      Authorization: `Bearer ${user.access}`,
+    };
+    try {
+      const response = await httpClient.post(
+      "github/api/user",
+      data,
+      { headers }
+      );
+      if (response.status === 201) {
+      toast.success("Profile saved successfully");
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+      toast.error("Session expired, please login again");
+      } else if (error.response.status === 400) {
+      toast.error("Profile already saved");
+      } else {
+      toast.error("An error occurred, please try again");
+      }
+        console.log(error);
+      }
+    };
+
+
   const saveRepo = async (repo) => {
     const data = {
       repo_creator: repo.owner.login,
@@ -135,14 +167,21 @@ const UserDetailPage = ({ match }) => {
               </p>
             </div>
           </div>
-          <a
-            href={githubUser.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-primary hover:bg-danger transition-all duration-200 text-white rounded-md shadow-md-primary-300 p-2 mt-4 inline-block"
-          >
-            View Profile
-          </a>
+          <div className="flex justify-center space-x-4 mt-4">
+            <button
+              onClick={() => window.open(githubUser.html_url, "_blank")}
+              rel="noopener noreferrer"
+              className="bg-primary hover:bg-danger transition-all duration-200 text-white rounded-md shadow-md-primary-300 p-2 inline-block"
+            >
+              View Profile
+            </button>
+            <button
+              onClick={() => saveProfile(githubUser)}
+              className="bg-primary hover:bg-danger transition-all duration-200 text-white px-2 py-1 rounded-sm shadow-md inline-block"
+            >
+              Save Profile
+            </button>
+          </div>
         </div>
         <div className="container mx-auto my-4">
           <h3 className="text-2xl font-semibold text-center">
@@ -153,17 +192,22 @@ const UserDetailPage = ({ match }) => {
               <div key={repo.id} className="bg-white shadow-md rounded-lg p-4">
                 <h3 className="text-xl font-semibold">{repo.name}</h3>
                 <p className="text-gray-600">{repo.description}</p>
-                <a
-                  href={repo.html_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white mr-2 hover:bg-success transition-all duration-200 bg-secondary px-2 py-1 rounded-sm shadow-md mt-2 inline-block"
-                >
-                  View Repo
-                </a>
-                <button onClick={() => saveRepo(repo)} className="bg-primary hover:bg-danger transition-all duration-200 text-white px-2 py-1 rounded-sm shadow-md mt-2 inline-block">
-                  Save Repo
-                </button>
+                <div className="flex justify-center space-x-4 mt-2">
+                  <a
+                    href={repo.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:bg-success transition-all duration-200 bg-secondary px-2 py-1 rounded-sm shadow-md inline-block"
+                  >
+                    View Repo
+                  </a>
+                  <button
+                    onClick={() => saveRepo(repo)}
+                    className="bg-primary hover:bg-danger transition-all duration-200 text-white px-2 py-1 rounded-sm shadow-md inline-block"
+                  >
+                    Save Repo
+                  </button>
+                </div>
               </div>
             ))}
           </div>
