@@ -6,7 +6,11 @@ import { toast } from 'react-toastify';
 const register = async (userData) => {
   try {
     const response = await axiosInstance.post("accounts/api/register", userData);
-    Cookie.set("user", JSON.stringify(response.data), { expires: 30 });
+    if (response.data && response.status === 201) {
+      // set the data in cookie
+      Cookie.set("user", JSON.stringify(response.data), { expires: 30 });
+      return response.data;
+    }
     return response.data;
   } catch (err) {
     console.error(err)
@@ -20,7 +24,6 @@ const login = async (userData) => {
     const response = await axiosInstance.post("accounts/api/login", userData);
 
     if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
       // set the data in cookie
       Cookie.set("user", JSON.stringify(response.data), { expires: 30 });
       return response.data;

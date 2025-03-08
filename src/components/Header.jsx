@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from 'next/navigation';
-import { logout } from '../features/authSlice';
+import { logout, resetMessage } from '../features/authSlice';
 
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
@@ -15,7 +15,7 @@ const Header = () => {
   const logoutHandler = () => {
     try {
       dispatch(logout());
-      router.push("/login");
+      router.push("/");
     } catch (err) {
       console.error(err);
     }

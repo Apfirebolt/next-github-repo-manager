@@ -33,11 +33,6 @@ export default function Github() {
       });
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    console.log('Page now is ', page)
-  }
-
   const goToNextPage = () => {
     setCurrentPage(currentPage + 1);
   }
@@ -46,14 +41,23 @@ export default function Github() {
     setCurrentPage(currentPage - 1);
   }
 
-  // debounce search here
+  // debounce search here for current page change and items per page change
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       searchUser(searchText, currentPage, itemsPerPage);
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchText, itemsPerPage, currentPage]);
+  }, [itemsPerPage, currentPage]);
+
+  // reset search text when page changes
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      searchUser(searchText, 1, itemsPerPage);
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchText]);
 
   return (
     <Fragment>
@@ -72,21 +76,21 @@ export default function Github() {
               className="px-4 py-2 border rounded-lg w-full max-w-xl mx-auto"
             />
             <button
-              onClick={() => goToNextPage()}
-              className={`px-4 py-2 rounded-lg ml-4 ${apiData.total_count < 1 ? 'bg-gray-400 text-gray-700' : 'bg-secondary text-white'}`}
-              disabled={apiData.total_count < 1}
-            >
-              Next Page
-            </button>
-            <p className="mx-2">
-              Page: {currentPage} of {Math.ceil(apiData.total_count / itemsPerPage)}
-            </p>
-            <button
               onClick={() => goToPrevPage()}
               className={`px-4 py-2 rounded-lg ml-4 ${currentPage === 1 ? 'bg-gray-400 text-gray-700' : 'bg-secondary text-white'}`}
               disabled={currentPage === 1}
             >
               Prev Page
+            </button>
+            <p className="mx-2">
+              Page: {currentPage} of {Math.ceil(apiData.total_count / itemsPerPage)}
+            </p>
+            <button
+              onClick={() => goToNextPage()}
+              className={`px-4 py-2 rounded-lg ml-4 ${apiData.total_count < 1 ? 'bg-gray-400 text-gray-700' : 'bg-secondary text-white'}`}
+              disabled={apiData.total_count < 1}
+            >
+              Next Page
             </button>
             
             <select

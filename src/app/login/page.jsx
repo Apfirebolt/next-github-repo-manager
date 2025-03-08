@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-import { login } from "../../features/authSlice";
+import { login, resetMessage } from "../../features/authSlice";
 import Image from "next/image";
 import githubLogo from "../../../public/github.png";
 import Header from "../../components/Header";
@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  
+
   const { user, message } = useSelector((state) => state.auth);
 
   const validate = () => {
@@ -38,20 +38,22 @@ const LoginPage = () => {
       setErrors(validationErrors);
       return;
     }
-    // Submit to API
-    toast.success("Login successful");
     await dispatch(login({ email, password }));
+    dispatch(resetMessage());
   };
+
+  useEffect(() => {
+    // show message
+    if (message) {
+      toast.success(message);
+      dispatch(resetMessage());
+    }
+  }, [message]);
 
   return (
     <Fragment>
       <Header />
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -63,6 +65,9 @@ const LoginPage = () => {
                 width={48}
                 height={48}
               />
+              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Sign in to your account
+              </h2>
               <div>
                 <label
                   htmlFor="email"

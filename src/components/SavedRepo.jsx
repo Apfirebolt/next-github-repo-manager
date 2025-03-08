@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import httpClient from "../plugins/interceptor";
+import { toast } from "react-toastify";
 
 const SavedRepo = () => {
   const [repoData, setRepoData] = useState({});
@@ -38,11 +39,13 @@ const SavedRepo = () => {
       const response = await httpClient.delete(`github/api/delete/${repoId}`, {
         headers,
       });
-      if (response.status === 200) {
+      if (response.status === 204) {
+        toast.success("Repo deleted successfully");
         setRepoData((prevData) => ({
           ...prevData,
           results: prevData.results.filter((repo) => repo.id !== repoId),
         }));
+        await getSavedRepos();
       }
     } catch (error) {
       console.log(error);
@@ -51,7 +54,12 @@ const SavedRepo = () => {
 
   return (
     <div className="p-4">
-      <p className="text-xl font-bold mb-4">Saved repos</p>
+      {repoData && repoData.count > 0 && (
+        <p className="text-xl font-bold mb-8 bg-carafe text-white text-center py-2">
+          Here are your saved repos {user ? user.username : ""}. You have saved{" "}
+          {repoData.count} repos.
+        </p>
+      )}
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -61,23 +69,22 @@ const SavedRepo = () => {
               {repoData.results.map((repo, index) => (
                 <div
                   key={index}
-                  className="repo-card p-4 border rounded shadow"
+                  className="p-4 border rounded shadow bg-secondary text-white"
                 >
                   <h3 className="text-lg font-semibold">{repo.repo_name}</h3>
                   <p>Repo Owned by: {repo.repo_creator}</p>
                   <p>Language: {repo.repo_language}</p>
                   <p>Stars: {repo.repo_stars}</p>
-                  <a
-                    href={repo.repo_url}
-                    target="_blank"
+                  <button
+                    onClick={() => window.open(repo.repo_url, "_blank")}
                     rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
+                    className="hover:underline block bg-primary text-white px-4 py-2 rounded mt-2"
                   >
                     Repo Link
-                  </a>
+                  </button>
                   <button
                     onClick={() => deleteRepo(repo.id)}
-                    className="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                    className="mt-2 px-4 py-2 bg-danger text-white rounded hover:bg-red-900 transition-all duration-200"
                   >
                     Delete
                   </button>

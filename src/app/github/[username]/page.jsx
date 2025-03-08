@@ -21,13 +21,13 @@ const UserDetailPage = ({ match }) => {
   const saveRepo = async (repo) => {
     const data = {
       repo_creator: repo.owner.login,
-      repo_language: repo.language,
+      repo_language: repo.language ? repo.language : "Not Specified",
       repo_name: repo.name,
-      repo_description: repo.description,
+      repo_description: repo.description ? repo.description : "Not Specified",
       repo_url: repo.html_url,
-      repo_stars: repo.stargazers_count,
-      repo_score: repo.score,
-      repo_watchers: repo.watchers_count,
+      repo_stars: repo.stargazers_count ? repo.stargazers_count : 0,
+      repo_score: repo.score ? repo.score : 0,
+      repo_watchers: repo.watchers_count ? repo.watchers_count : 0,
       repo_created_on: repo.created_at,
     };
     const headers = {

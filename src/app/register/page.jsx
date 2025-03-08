@@ -2,21 +2,23 @@
 
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import Image from "next/image";
 import githubLogo from "../../../public/github.png";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
-import { register } from "../../features/authSlice";
+import { register, resetMessage } from "../../features/authSlice";
 
 const RegisterPage = () => {
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
-  const { user, message } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.auth);
 
   const validate = () => {
     const newErrors = {};
@@ -38,19 +40,24 @@ const RegisterPage = () => {
       return;
     }
     // Submit to API
-    await dispatch(register({ username, email, password }));
+    dispatch(register({ username, email, password }));
+    dispatch(resetMessage());
   };
+
+  useEffect(() => {
+    // show message
+    if (message && message === 'User registered successfully, please login') {
+      toast.success(message);
+      dispatch(resetMessage());
+    } else if (message) {
+      toast.error(message);
+    }
+  }, [message]);
 
   return (
     <Fragment>
       <Header />
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Create your account
-          </h2>
-        </div>
-
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={onSubmit}>
@@ -61,6 +68,9 @@ const RegisterPage = () => {
                 width={48}
                 height={48}
               />
+              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Create your account
+              </h2>
               <div>
                 <label
                   htmlFor="username"

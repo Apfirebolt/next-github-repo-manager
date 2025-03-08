@@ -88,6 +88,9 @@ export const authSlice = createSlice({
     resetError: (state) => {
       state.isError = false
     },
+    resetMessage: (state) => {
+      state.message = ''
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -117,7 +120,7 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
-        state.message = action.payload
+        state.message = 'Invalid credentials'
         state.user = null
       })
       .addCase(getUserProfile.pending, (state) => {
@@ -139,9 +142,10 @@ export const authSlice = createSlice({
         state.profile = null
         state.isSuccess = true
         state.message = 'User logged out successfully'
+        console.log('User logged out')
       })
   },
 })
 
-export const { reset, resetError, resetSuccess } = authSlice.actions
+export const { reset, resetError, resetSuccess, resetMessage } = authSlice.actions
 export default authSlice.reducer
