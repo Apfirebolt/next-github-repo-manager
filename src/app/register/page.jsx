@@ -4,6 +4,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { FaEnvelope, FaLock, FaUserAlt } from "react-icons/fa";
 import githubLogo from "../../../public/github.png";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -78,7 +79,10 @@ const RegisterPage = () => {
                 >
                   Username
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <FaUserAlt className="text-gray-400" />
+                  </div>
                   <input
                     id="username"
                     name="username"
@@ -86,7 +90,7 @@ const RegisterPage = () => {
                     placeholder="Enter Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <p className="my-2 text-red-800">{errors.username}</p>
@@ -99,7 +103,10 @@ const RegisterPage = () => {
                 >
                   Email address
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <FaEnvelope className="text-gray-400" />
+                  </div>
                   <input
                     id="email"
                     name="email"
@@ -107,7 +114,7 @@ const RegisterPage = () => {
                     placeholder="Enter Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <p className="my-2 text-red-800">{errors.email}</p>
@@ -120,7 +127,10 @@ const RegisterPage = () => {
                 >
                   Password
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <FaLock className="text-gray-400" />
+                  </div>
                   <input
                     id="password"
                     name="password"
@@ -128,7 +138,7 @@ const RegisterPage = () => {
                     placeholder="Enter Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <p className="my-2 text-red-800">{errors.password}</p>
@@ -148,7 +158,7 @@ const RegisterPage = () => {
                   Already have an account?
                   <a
                     href="/login"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                    className="font-medium text-indigo-600 hover:text-indigo-500 mx-2"
                   >
                     Sign in
                   </a>

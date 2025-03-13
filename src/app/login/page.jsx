@@ -3,6 +3,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 
 import { login, resetMessage } from "../../features/authSlice";
 import Image from "next/image";
@@ -54,7 +55,6 @@ const LoginPage = () => {
     <Fragment>
       <Header />
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={onSubmit}>
@@ -75,7 +75,8 @@ const LoginPage = () => {
                 >
                   Email address
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
+                  <FaEnvelope className="absolute left-3 top-2.5 text-gray-400" />
                   <input
                     id="email"
                     name="email"
@@ -83,7 +84,7 @@ const LoginPage = () => {
                     placeholder="Enter Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <p className="my-2 text-red-800">{errors.email}</p>
@@ -96,7 +97,8 @@ const LoginPage = () => {
                 >
                   Password
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
+                  <FaLock className="absolute left-3 top-2.5 text-gray-400" />
                   <input
                     id="password"
                     name="password"
@@ -104,7 +106,7 @@ const LoginPage = () => {
                     placeholder="Enter Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <p className="my-2 text-red-800">{errors.password}</p>
