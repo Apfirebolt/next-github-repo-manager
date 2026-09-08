@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from 'next/navigation';
-import { logout, resetMessage } from '../features/authSlice';
+import { useRouter } from "next/navigation";
+import { logout } from "../features/authSlice";
 
 const Header = () => {
   const { user } = useSelector((state) => state.auth);
@@ -12,7 +12,9 @@ const Header = () => {
   const router = useRouter();
   const [clientUser, setClientUser] = useState(null);
 
-  console.log('Host ', process.env.NEXT_PUBLIC_API_URL);
+  useEffect(() => {
+    setClientUser(user);
+  }, [user]);
 
   const logoutHandler = () => {
     try {
@@ -22,58 +24,72 @@ const Header = () => {
       console.error(err);
     }
   };
-  useEffect(() => {
-    setClientUser(user);
-  }, [user]);
 
   return (
-    <header className="bg-primary">
-      <div className="container mx-auto flex justify-between items-center p-4">
-        <nav>
-          <ul className="flex space-x-4">
-            {clientUser ? (
-              <li className="flex items-center space-x-2">
-                <span className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold">
-                  Hello, {clientUser.username ? clientUser.username : ""}
-                </span>
-                <button
-                  onClick={logoutHandler}
-                  className="bg-red-500 text-white rounded-full px-3 py-1 text-sm font-semibold hover:bg-red-600"
-                >
-                  Logout
-                </button>
-              </li>
-            ) : (
-              <>
-                <li>
-                  <Link href="/login" className="bg-blue-500 text-white rounded-full px-3 py-1 text-sm font-semibold hover:bg-blue-600">
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/register" className="bg-green-500 text-white rounded-full px-3 py-1 text-sm font-semibold hover:bg-green-600">
-                    Register
-                  </Link>
-                </li>
-              </>
-            )}
-            <li>
-              <Link href="/" className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-gray-300">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-gray-300">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/github" className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-gray-300">
-                Github Users
-              </Link>
-            </li>
-          </ul>
+    <header className="sticky top-0 z-50 w-full border-b border-blood-dark/30 bg-blood-dark/95 backdrop-blur-md text-parchment transition-colors">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Brand / Logo */}
+        <Link 
+          href="/" 
+          className="text-lg font-bold tracking-wider text-parchment transition hover:text-parchment/80 uppercase"
+        >
+          Portal
+        </Link>
+
+        {/* Central Navigation */}
+        <nav className="flex items-center space-x-1 sm:space-x-2">
+          <Link
+            href="/"
+            className="rounded-md px-3 py-1.5 text-sm font-medium text-parchment/80 transition hover:bg-wine/30 hover:text-parchment"
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            className="rounded-md px-3 py-1.5 text-sm font-medium text-parchment/80 transition hover:bg-wine/30 hover:text-parchment"
+          >
+            About
+          </Link>
+          <Link
+            href="/github"
+            className="rounded-md px-3 py-1.5 text-sm font-medium text-parchment/80 transition hover:bg-wine/30 hover:text-parchment"
+          >
+            Github Users
+          </Link>
         </nav>
+
+        {/* Auth Actions */}
+        <div className="flex items-center space-x-3">
+          {clientUser ? (
+            <div className="flex items-center space-x-3">
+              <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-sage/40 bg-sage/10 px-3 py-1 text-xs font-medium text-parchment">
+                <span className="h-1.5 w-1.5 rounded-full bg-sage"></span>
+                {clientUser.username ?? "User"}
+              </span>
+              <button
+                onClick={logoutHandler}
+                className="cursor-pointer rounded-md border border-wine bg-wine/80 px-3.5 py-1.5 text-xs font-semibold text-parchment shadow-sm transition hover:bg-wine hover:border-wine active:scale-95"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-2">
+              <Link
+                href="/login"
+                className="rounded-md px-3 py-1.5 text-xs font-semibold text-parchment/90 transition hover:bg-sage/20 hover:text-parchment"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/register"
+                className="rounded-md bg-wine px-3.5 py-1.5 text-xs font-semibold text-parchment shadow-sm transition hover:bg-wine/85 hover:shadow active:scale-95"
+              >
+                Register
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
