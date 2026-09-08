@@ -1,3 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-wine: #6D0808;
+  --color-blood-dark: #2D0000;
+  --color-sage: #757D6F;
+  --color-parchment: #EEEAD7;
+}

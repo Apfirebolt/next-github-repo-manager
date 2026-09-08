@@ -12,6 +12,8 @@ const Header = () => {
   const router = useRouter();
   const [clientUser, setClientUser] = useState(null);
 
+  console.log('Host ', process.env.NEXT_PUBLIC_API_URL);
+
   const logoutHandler = () => {
     try {
       dispatch(logout());
